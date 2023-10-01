@@ -1,0 +1,64 @@
+/*------- HIDE POSTS WITH SPOILER TAGS | @glenthemes -------*/
+[posts-selector]{
+    position:relative;
+    visibility:hidden;
+    transition:max-height var(--ShrinkPost-Transition-Speed) ease-in-out, min-height var(--ShrinkPost-Transition-Speed) ease-in-out, overflow-y var(--ShrinkPost-Transition-Speed) ease-in-out;
+}
+
+[posts-selector] img, [posts-selector] iframe{
+    max-width:100%;
+    vertical-align:middle;
+}
+
+.spoiler-overlay, .sp {
+    position:absolute;
+    top:0;left:0;
+    width:100%;
+    height:100%;
+}
+
+.spoiler-overlay {
+    background:var(--Spoiler-Overlay-Color);
+    opacity:calc(100% - var(--Spoiler-Overlay-Transparency));
+}
+
+.sp {
+    display:table;
+    text-align:center;
+}
+
+._st {
+    display:table-cell;
+    vertical-align:middle;
+}
+
+.warning-text {
+    font-size:var(--Warning-Text-Size);
+    color:var(--Warning-Text-Color);
+}
+
+.sp-tags {
+    color:var(--Spoiler-Tags-Color);
+}
+
+.view-button {
+    display:inline-block;
+    margin-top:4px;
+    padding:var(--ViewPost-Button-Padding) calc(var(--ViewPost-Button-Padding) * 1.1);
+    background:var(--ViewPost-Button-Background);
+    border:1px solid var(--ViewPost-Button-Border);
+    border-radius:var(--ViewPost-Button-Roundness);
+    font-size:var(--ViewPost-Button-FontSize);
+    text-transform:uppercase;
+    letter-spacing:1.5px;
+    color:var(--ViewPost-Button-Text-Color);
+    line-height:1em;
+    cursor:help;
+    transition:all .420s ease-in-out;
+}
+
+.view-button:hover {
+    border-color:var(--ViewPost-Button-HOVER-Border);
+    background:var(--ViewPost-Button-HOVER-Background);
+    color:var(--ViewPost-Button-HOVER-Text-Color);
+}
