@@ -2,204 +2,215 @@
 
 ### <sub>TABLE OF CONTENTS:</sub>
 
-* ┈┈ [ᴀʙᴏᴜᴛ](#about)
-* ┈┈ [ᴅᴇᴍᴏ](https://jsfiddle.net/glenthemes/m2qsevh0/show)
-* ┈┈ [ғᴇᴀᴛᴜʀᴇs](#features)
-* ┈┈ [ʜᴏᴡ ᴛᴏ ᴜsᴇ](#how-to-use)
-* ┈┈ [ɴᴇᴇᴅ ʜᴇʟᴘ?](#help--troubleshooting)
+* ┈┈ [About](#about)
+* ┈┈ [Requirements](#requirements)
+* ┈┈ [Demo](#demo)
+* ┈┈ [Install / How to Use](#how-to-use)
+* ┈┈ [Help / Troubleshooting](#need-help)
 
 ---
 
 ### <sub>ABOUT:</sub>
 
-Originally created for Tumblr use, **.spoilerTags()** is a tag-filtering plugin for blog themes based on the [existing tag filtering system for the Tumblr dashboard](https://tumblr.zendesk.com/hc/en-us/articles/115015814708-Tag-filtering). You can set your own tags to filter, and if a post contains those tags, it will cover it up with a warning message, which readers can dismiss by clicking a button if they still wish to proceed. This is helpful for your followers or passers-by who wish to go through your blog without being spoiled, or seeing something they potentially might not want to see.
+Originally created for Tumblr use, **spoilerTags()** is a tag-filtering plugin for blog themes based on the [existing tag filtering system for the Tumblr dashboard](https://tumblr.zendesk.com/hc/en-us/articles/115015814708-Tag-filtering). You can set your own tags to filter, and if a post contains those tags, it will cover it up with a warning message, which readers can dismiss by clicking a button if they still wish to proceed. This is helpful for your followers or passers-by who wish to go through your blog without being spoiled, or seeing something they potentially might not want to see.
 
 ※ this plugin is not exclusive to Tumblr, and can also be used on other sites for temporarily hiding particular content.
 
-| ▼ ᴘʟᴇᴀsᴇ ɴᴏᴛᴇ:     |                 |
-|:--------------------|-----------------|
-| **Requirements:**   | jQuery             |
-| **Not supported:**  | [infinite scroll](https://infiniteajaxscroll.com/infinite-scroll-faq)    |
+---
 
-┏━━━━━━━━━━━━━━━┓  
-  
-˗ˋˏ┈┈┈┈  [**VIEW DEMO**](https://jsfiddle.net/glenthemes/m2qsevh0/show)  ┈┈┈┈ˎˊ˗  
-  
-┗━━━━━━━━━━━━━━━┛
+### <sub>REQUIREMENTS:</sub>
+
+* As of October 2023, jQuery is no longer required :tada:
+* Basic CSS & HTML knowledge is a plus.
 
 ---
 
-### <sub>FEATURES:</sub>
+### <sub>DEMO:</sub>
 
-- filter anything from spoilers to content warnings!
-- custom warning message
-- option to include or exclude ‘#’ before tags
-- custom tags separator
-- custom ‘<kbd>show anyway</kbd>’ text
-- option to shrink posts until click expand
-- adjustable colors
+![spoilerTags screenshot GIF demo.](https://64.media.tumblr.com/9ece0c790a4d9c31ab9f3337593a833c/64ba7621e0cde398-03/s640x960/8d2dd876cc4345bd1e9da0780c66cea52221aaaf.gif)
+
+**Demo Preview:**  
+:mag: [jsfiddle.net/glenthemes/4h1n3g7r/show](https://jsfiddle.net/glenthemes/4h1n3g7r/show)
+
+**Demo Code:**  
+:pencil: [jsfiddle.net/glenthemes/4h1n3g7r/](https://jsfiddle.net/glenthemes/4h1n3g7r/)
 
 ---
-
 
 ### <sub>HOW TO USE:</sub>
 
-These instructions cater specifically to using this plugin on Tumblr blogs.  
-If you are using this plugin *outside* of Tumblr, please refer to my [demo](https://jsfiddle.net/glenthemes/m2qsevh0)'s code!  
+<sup>※ The following instructions are for Tumblr users.</sup>
 
-───────────・ʚɞ・────────────
+:cherry_blossom: **Step 1 &mdash; Find your posts:**
 
-### <sub>STEP 1 — locating your POSTS:</sub>
-
-Search for `{block:Posts}` in your theme's code.
-
-On the next line or so, you should see something that looks like (or at least starts with) the following:
-```
-<div class="posts">
-```
-
-Add `posts-selector` at the end like this:
-```
+Start by finding `{block:Posts}` or `{block:Posts` in your theme code.  
+If you see `{block:PostSummary}`, ignore that.  
+Once you've found it, add `posts-selector`, like so:
+```html
 <div class="posts" posts-selector>
 ```
 
-───────────・ʚɞ・────────────
+---
 
-### <sub>STEP 2 — locating your TAGS:</sub>
+:cherry_blossom:&ensp;**Step 2 &mdash; Find your tags:**
 
-Search for `{block:Tags}` in your theme's code.
-
-On the next line or so, you should find `#{Tag}`  
-This may or may not come with a `#` before it, though it doesn't really matter.
-
-On this line, add `init-tags` like this:
-```
+Find `{Tag}` in your theme. That line and its surrounding lines should look something like this:
+```html
 {block:Tags}
-<a href="{TagURL}" init-tags>#{Tag}</a>
+<a href="{TagURL}">{Tag}</a>
 {/block:Tags}
 ```
 
-───────────・ʚɞ・────────────
-
-### <sub>STEP 3 — jQuery:</sub>
-
-This plugin requires jQuery, but you can skip this step if you already have it installed.
-
-To check if your theme has jQuery in it or not, search for `ajax.googleapis.com/ajax/libs/jquery` or just `jquery`.  
-If you find it as a link that ends in `.js`, great! Skip to **step 4**.
-
-If you **can't** find it, add this under `<head>`:
-```
-<script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script>
+Add `init-tags`, like so:
+```html
+{block:Tags}
+<a href="{TagURL}" init-tags>{Tag}</a>
+{/block:Tags}
 ```
 
-───────────・ʚɞ・────────────
+---
 
-### <sub>STEP 4 — insert the required files:</sub>
+:cherry_blossom:&ensp;**Step 3 &mdash; Adding the essentials:**
 
-Paste this under `<head>`. Please also make sure this comes *after* the jQuery!
-```
-<!--------- HIDE POSTS WITH SPOILER TAGS | @glenthemes -------->
-<script src="//spoilertags.gitlab.io/s/filter.js"></script>
-<link href="//spoilertags.gitlab.io/s/style.css" rel="stylesheet">
+Paste the following after `<head>`:
+```html
+<!--✻✻✻✻✻✻  spoilerTags by @glenthemes  ✻✻✻✻✻✻-->
+<script src="//spoilertags.gitlab.io/s/v2/filter.js"></script>
+<link href="//spoilertags.gitlab.io/s/v2/style.css" rel="stylesheet">
 <script>
-$(function(){
-    $("[init-tags]").spoilerTags({
-        filter:[
+document.addEventListener("DOMContentLoaded", () => {
+    spoilerTagsV2({
+        filter: [
             "#spoiler",
-            "#spoilers"
+            "#spoilers",
         ],
         
         message: "This post contains the following:",
         includeHashtag: "yes",
-        tagSeparator: ",",
+        tagSeparator: ", ",
         viewPostText: "show anyway",
         shrinkPosts: "yes"
-    });
-});
+    })
+})
 </script>
-
-<style>
+<style spoilertags>
 :root {
-    --Spoiler-Overlay-Color: #fcfcfc;
-    --Spoiler-Overlay-Transparency: 0%; /* MUST be in % */
+    --Spoiler-Overlay-Color:#ffffff;
     
-    --Warning-Text-Size: 12px;
-    --Warning-Text-Color: #222;
-    --Spoiler-Tags-Color: #222;
+    --Spoiler-Warning-Padding:25px;
+    --Spoiler-Warning-Color:#50586c;
+    --Spoiler-Warning-Row-Spacing:1em;
     
-    --ViewPost-Button-Padding: 10px;
-    --ViewPost-Button-Border: #eee;
-    --ViewPost-Button-Roundness: 3px;
-    --ViewPost-Button-Background: #fefefe;
-    --ViewPost-Button-FontSize: 80%;
-    --ViewPost-Button-Text-Color: #222;
+    --Spoiler-Tags-Color:#222222;
     
-    --ViewPost-Button-HOVER-Border: #222;
-    --ViewPost-Button-HOVER-Background: #222;
-    --ViewPost-Button-HOVER-Text-Color: #eee;
+    --Spoiler-Button-Padding:0.7rem;
+    --Spoiler-Button-Background:#ffffff;
+    --Spoiler-Button-Border:#eeeeee;
+    --Spoiler-Button-Roundness:4px;
+    --Spoiler-Button-Text-Color:#444444;
+    --Spoiler-Button-HOVER-Border:#222222;
+    --Spoiler-Button-HOVER-Background:#222222;
+    --Spoiler-Button-HOVER-Text-Color:#efefef;
+    --Spoiler-Button-HOVER-Speed:0.25s;
     
-    --ShrinkPost-Transition-Speed: 699ms; /* can be in ms or s */
+    --Spoiler-Fade-Speed:0.4s;
+    --Shrink-Posts-Speed:0.8s;
 }
 </style>
 ```
-You can customize the cover overlay and text appearance options in the above list (called `:root`)!
+---
+
+:cherry_blossom:&ensp;**Step 4 &mdash; Change the tags you want filtered:**
+
+From the code we pasted from the previous step, you can set your tags here:
+
+<img width="217" alt="Screenshot of the section of code where you can assign your filter tags." src="https://github.com/glenthemes/spoilerTags/assets/45606634/3cfe77df-d24a-4c10-9025-711146416416">
 
 
-───────────・ʚɞ・────────────
+Things to note:
+* Each line represents one tag.
+* Make sure that each tag *stays inside the quotation marks*.
+* Make sure each tag has a comma `,` at the end.
+* Your list of tags should stay inside the square brackets area `[ ]`.
 
-### <sub>STEP 5 — set your custom tags:</sub>
+---
 
-Look for `.spoilerTags` – this should take you back up to where we pasted our stuff earlier:  
-  
-![image](https://user-images.githubusercontent.com/45606634/210124376-59f50348-b69a-4f38-8438-ab513130d652.png)  
-  
-The tags `#spoiler` and `#spoilers` have been automatically selected for you, but you can add or change them to whatever your own spoiler tags are.
+:cherry_blossom:&ensp;**Step 5 &mdash; Warning message:**
 
-Make sure that:
-- each tag goes between quotation marks.  
-  do NOT remove them / forget to close them
-- always put a comma after each `"#tag"`.  
-  your last tag doesn't have to have a comma but you can include it if you want
-- do not remove the `closing square bracket & its comma` after the tags: `],`
-- type in your tags *exactly* as how you did them when you originally made or reblogged a post.  
-  so if e.g. you want to filter `#bnha spoilers`, that's exactly what you type in; there's no need to swap out the <kbd>space</kbd> with a hyphen <kbd>-</kbd> for this
+<img width="369" alt="image" src="https://github.com/glenthemes/spoilerTags/assets/45606634/bd208a44-48dc-4e49-9eeb-6b6c1cecfce0">
 
+Things to note:
+* Make sure that message *stays inside the quotation marks*.
+* Do not remove the comma `,` at the end.
 
-───────────・ʚɞ・────────────
+---
 
-### <sub>STEP 6 — more settings:</sub>
+:cherry_blossom:&ensp;**Step 6 &mdash; Include/Exclude hashtag:**
 
-After setting the tags that you want filtered, directly below that are 5 options:  
-  
-![image](https://user-images.githubusercontent.com/45606634/210124501-1922a3e0-7a03-4b17-a1c3-08bb490cdc7b.png)  
-  
-Here is a description of what each of them are, and what you can do with them:
+Declare whether you want a hashtag `#` to precede each tag or not.
 
-| ▼ ᴏᴘᴛɪᴏɴ ɴᴀᴍᴇ:  | What it does: |
-|:-----------------|:---------------|
-| `message`        | The warning message you want to display to your readers when a post contains a spoiler tag.<br>Remember to keep the sentence within the quotation marks.<br><br>**Examples:**<br>❃ `message: "This post contains spoilers!",`<br>❃ `message: "Spoilers ahead!",`<br>❃ `message: "This post contains the following warnings:",`|
-| `includeHashtag`  | This controls whether your filter tags (in the warning message) will appear with a `#` before the tag, or without it.<br><br>❃ `includeHashtag: "yes",` — will show as `#spoiler, #long post`<br>❃ `includeHashtag: "no",` — will show as `spoiler, long post` |
-| `tagSeparator`   | If a post contains more than one spoiler tag, they are separated by a comma by default.<br>You can change this to another symbol.<br><br>e.g. you want to change it to the vertical line `┋`, ideally we'd want a `space` on either side of it (e.g. `#spoilers ┋ #food mention`). Since this plugin automatically puts a space after the character and not before, you will need to manually insert a `space` before the `┋` to make it look as you want it to.<br><br>**Examples:**<br>❃ `tagSeparator: " ┋",`<br>❃ `tagSeparator: " /",`<br>❃ `tagSeparator: ";",`<br>❃ `tagSeparator: " +",` |
-| `viewPostText`   | This is the text that you want your button to show. when clicked, the warning overlay fades out and reveals the post.<br><br>**Examples:**<br>❃ `viewPostText: "view post",`<br>❃ `viewPostText: "view anyway",` |
-| `shrinkPosts`    | Some spoiler posts (especially metas) can get quite long and when you have the spoiler overlay over it, you'll just see a massive chunk of whitespace before you see the actual spoiler warning (since it's located in the center).<br>This `shrinkPosts` option is on by default, but you can turn it off you wish.<br><br>**Examples:**<br>❃ `shrinkPosts: "yes"` — make spoiler posts compact<br>❃ `shrinkPosts: "no"` — normal post height |
+<img width="182" alt="image" src="https://github.com/glenthemes/spoilerTags/assets/45606634/660c8a6f-6c6b-4a10-b65a-9bc54c0f1472">
 
+| Available Options: | What it looks like |
+| ----------------- | ------------------------------------------------------------------ |
+| `yes` | <img width="147" alt="image" src="https://github.com/glenthemes/spoilerTags/assets/45606634/4c6a1b8c-4ed6-4b7e-820e-680e9fa22fed"> |
+| `no` | <img width="139" alt="image" src="https://github.com/glenthemes/spoilerTags/assets/45606634/4d3a884a-6dd5-497c-bbfe-a45a5f9e6b75"> |
 
-───────────・ʚɞ・────────────
+Things to note:
+* Make sure that `yes` or `no` *stays inside the quotation marks*.
+* Do not remove the comma `,` at the end.
 
-### <sub>STEP 7 — final checks:</sub>
+---
 
-Exit the customize page and try and go to a post of yours that has one of the tags you filtered, and see if the warning overlay works properly.
-If nothing happens, go through this guide again and double-check that you've done all the steps. If your theme breaks or if it doesn't work, you can contact me below for help.
+:cherry_blossom:&ensp;**Step 7 &mdash; Tag separator:**
 
-───────────・ʚɞ・────────────
+Declare how you want multiple tags to be separated.
 
-### <sub>HELP / TROUBLESHOOTING:</sub>
+<img width="163" alt="image" src="https://github.com/glenthemes/spoilerTags/assets/45606634/286b8593-a650-4ac4-9caf-291277a9cfc5">
 
-Things I need in order to help you:
-- your blog username/url
-- your *full* theme code; you can create a copy on [pastery.net](https://pastery.net) and send it over.
+Things to note:
+* Make sure that your separator (including any spaces) *stays inside the quotation marks*.
+* Do not remove the comma `,` at the end.
 
-Where to ask:
-- Discord, through **#theme-help** or **DM**: [discord.gg/RcMKnwz](https://discord.gg/RcMKnwz)
-- email: `glenthemes.exe@gmail.com`
+---
+
+:cherry_blossom:&ensp;**Step 8 &mdash; "Show Anyway" button text:**
+
+<img width="237" alt="image" src="https://github.com/glenthemes/spoilerTags/assets/45606634/4e5f1b14-ca67-4587-97a0-946952baadbe">
+
+Things to note:
+* Make sure that your button text *stays inside the quotation marks*.
+* Do not remove the comma `,` at the end.
+
+---
+
+:cherry_blossom:&ensp;**Step 9 &mdash; Shrink posts**
+
+Declare whether or not you want long posts to shrink/shorten.
+
+<img width="167" alt="image" src="https://github.com/glenthemes/spoilerTags/assets/45606634/73912a12-da8a-4c23-b290-9d0702dd3aa4">
+
+---
+
+:cherry_blossom:&ensp;**Step 10 &mdash; Customize Appearance**
+
+Colors, padding, hover speeds etc can be customized in this list called `:root`:  
+<img width="380" alt="image" src="https://github.com/glenthemes/spoilerTags/assets/45606634/b7c4db19-eb1d-4924-8aff-824e256f89b7">
+
+---
+
+### <sub>NEED HELP?</sub>
+
+Please contact me on Discord ([discord.gg/RcMKnwz](https://discord.gg/RcMKnwz)) either through DM or in the **#theme-help** channel of my server!
+
+When asking for help, please remember to include:
+* What theme you're using (if applicable), and by who.
+* Full theme code, you can paste it through [pastery.net](https://pastery.net).
+* Summary of what you're trying to do / what you're stuck on!
+
+---
+
+### <sub>THANK YOU :gift_heart:</sub>
+
+If you found **spoilerTags** useful, please consider dropping me a tip! :sparkles:  
+:coffee:&ensp;[ko-fi.com/glenthemes](https://ko-fi.com/glenthemes)
