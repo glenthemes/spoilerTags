@@ -1,64 +1,97 @@
-/*------- HIDE POSTS WITH SPOILER TAGS | @glenthemes -------*/
+/*---------------------------------------------------------
+
+    spoilerTags @glenthemes
+    github.com/glenthemes/spoilerTags
+
+    [#] v2.0.0: 2023-10-01
+    [#] Last updated: 2023-10-01 4:48PM [PDT]
+    
+---------------------------------------------------------*/
+
 [posts-selector]{
-    position:relative;
-    visibility:hidden;
-    transition:max-height var(--ShrinkPost-Transition-Speed) ease-in-out, min-height var(--ShrinkPost-Transition-Speed) ease-in-out, overflow-y var(--ShrinkPost-Transition-Speed) ease-in-out;
+	position:relative;
+	overflow:hidden;
 }
 
-[posts-selector] img, [posts-selector] iframe{
-    max-width:100%;
-    vertical-align:middle;
+[posts-selector], .spoiler-overlay, .spoiler-overlay:before {
+	box-sizing:border-box;
 }
 
-.spoiler-overlay, .sp {
-    position:absolute;
-    top:0;left:0;
-    width:100%;
-    height:100%;
+[posts-selector].poof {
+	pointer-events:none;
+}
+
+.post-shrink {
+	transition:height var(--Shrink-Posts-Speed) ease-in-out
 }
 
 .spoiler-overlay {
-    background:var(--Spoiler-Overlay-Color);
-    opacity:calc(100% - var(--Spoiler-Overlay-Transparency));
+	position:absolute;
+	top:0;left:0;
+	width:100%;
+	height:100%;
+	display:flex;
+	flex-direction:column;
+	justify-content:center;
+	align-items:center;
+	text-align:center;
+	z-index:99999;
 }
 
-.sp {
-    display:table;
-    text-align:center;
+.spoiler-overlay:before {
+	content:"";
+	position:absolute;
+	top:0;left:0;
+	width:100%;
+	height:100%;
+	background-color:var(--Spoiler-Overlay-Color);
+	z-index:-1;
 }
 
-._st {
-    display:table-cell;
-    vertical-align:middle;
+.spoiler-overlay.leave,
+.spoiler-text.leave {
+	opacity:0;
 }
 
-.warning-text {
-    font-size:var(--Warning-Text-Size);
-    color:var(--Warning-Text-Color);
+.spoiler-overlay, .spoiler-overlay.leave,
+.spoiler-text, .spoiler-text.leave {
+	transition:opacity var(--Spoiler-Fade-Speed)
 }
 
-.sp-tags {
-    color:var(--Spoiler-Tags-Color);
+.spoiler-text {
+	padding:var(--Spoiler-Warning-Padding);
+	display:flex;
+	flex-direction:column;
+	justify-content:center;
+	align-items:center;
+	gap:var(--Spoiler-Warning-Row-Spacing) 0;
+	color:var(--Spoiler-Warning-Color)
 }
 
-.view-button {
-    display:inline-block;
-    margin-top:4px;
-    padding:var(--ViewPost-Button-Padding) calc(var(--ViewPost-Button-Padding) * 1.1);
-    background:var(--ViewPost-Button-Background);
-    border:1px solid var(--ViewPost-Button-Border);
-    border-radius:var(--ViewPost-Button-Roundness);
-    font-size:var(--ViewPost-Button-FontSize);
-    text-transform:uppercase;
-    letter-spacing:1.5px;
-    color:var(--ViewPost-Button-Text-Color);
-    line-height:1em;
-    cursor:help;
-    transition:all .420s ease-in-out;
+.spoiler-tags {
+	color:var(--Spoiler-Tags-Color)
 }
 
-.view-button:hover {
-    border-color:var(--ViewPost-Button-HOVER-Border);
-    background:var(--ViewPost-Button-HOVER-Background);
-    color:var(--ViewPost-Button-HOVER-Text-Color);
+.show-spoiler {
+	display:flex;
+	align-items:center;
+	justify-content:center;
+}
+
+.show-spoiler button {
+	margin:0;
+	outline:none;
+	padding:var(--Spoiler-Button-Padding);
+	background-color:var(--Spoiler-Button-Background);
+	border:1px solid var(--Spoiler-Button-Border);
+	border-radius:var(--Spoiler-Button-Roundness);
+	color:var(--Spoiler-Button-Text-Color);
+	line-height:100%;
+	transition:all var(--Spoiler-Button-HOVER-Speed) ease-in-out;
+}
+
+.show-spoiler button:hover {
+	border-color:var(--Spoiler-Button-HOVER-Border);
+	background-color:var(--Spoiler-Button-HOVER-Background);
+	color:var(--Spoiler-Button-HOVER-Text-Color);	
 }
