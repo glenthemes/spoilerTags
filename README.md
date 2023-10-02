@@ -14,6 +14,9 @@
 
 Originally created for Tumblr use, **spoilerTags()** is a tag-filtering plugin for blog themes based on the [existing tag filtering system for the Tumblr dashboard](https://tumblr.zendesk.com/hc/en-us/articles/115015814708-Tag-filtering). You can set your own tags to filter, and if a post contains those tags, it will cover it up with a warning message, which readers can dismiss by clicking a button if they still wish to proceed. This is helpful for your followers or passers-by who wish to go through your blog without being spoiled, or seeing something they potentially might not want to see.
 
+**Author:** @&hairsp;glenthemes  
+**View on Tumblr:** [glenthemes.tumblr.com/post/648322958817902592/spoilertags](https://glenthemes.tumblr.com/post/648322958817902592/spoilertags)
+
 ※ this plugin is not exclusive to Tumblr, and can also be used on other sites for temporarily hiding particular content.
 
 ---
@@ -38,6 +41,8 @@ Originally created for Tumblr use, **spoilerTags()** is a tag-filtering plugin f
 ---
 
 ### <sub>HOW TO USE:</sub>
+
+:bulb:&ensp;If you're here for the jQuery version of spoilerTags, please read the [old docs](https://github.com/glenthemes/spoilerTags/tree/main/releases/1.9.0#readme)!
 
 <sup>※ The following instructions are for Tumblr users.</sup>
 
