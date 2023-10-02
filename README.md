@@ -121,6 +121,14 @@ document.addEventListener("DOMContentLoaded", () => {
     --Spoiler-Fade-Speed:0.4s;
     --Shrink-Posts-Speed:0.8s;
 }
+
+.show-spoiler button {
+	font-family:inherit;
+	text-transform:uppercase;
+	letter-spacing:1px;
+	font-size:12px;
+	cursor:help;
+}
 </style>
 ```
 ---
