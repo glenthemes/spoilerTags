@@ -3,8 +3,8 @@
     spoilerTags @glenthemes
     github.com/glenthemes/spoilerTags
 
-    [#] v2.0.0: 2023-10-01
-    [#] Last updated: 2023-10-01 4:48PM [PDT]
+    [#] v2.0.1: 2024-01-27
+    [#] Last updated: 2024-01-27 1:54PM [PST]
     
 ---------------------------------------------------------*/
 
@@ -166,7 +166,7 @@ window.spoilerTagsV2 = (q_q) => {
 								let elFade = getSpeed("--Spoiler-Fade-Speed")
 								
 								// get shrink speed
-								let shrinkSpeed = getSpeed("--Shrink-Posts-Speed");						
+								let shrinkSpeed = getSpeed("--Shrink-Posts-Speed");
 								
 								// if needs to be shrunk
 								if(posts.matches("[old-post-height]")){
@@ -185,7 +185,10 @@ window.spoilerTagsV2 = (q_q) => {
 											// remove overlay
 											setTimeout(() => {
 												posts.classList.remove("poof")
-												overlay.style.display = "none"
+												overlay.style.display = "none";
+                        
+                        // remove inline height on posts after ani is done
+                        posts.style.height = "";
 											},shrinkSpeed)
 										},shrinkSpeed)
 									},elFade*0.8)
