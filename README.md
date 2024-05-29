@@ -88,7 +88,7 @@ Paste the following after `<head>`:
 spoilerTagsV3({
 	filter: [
 		"#spoiler",
-		"#spoilertags"
+		"#spoilers"
 	],
 	
 	message: "This post contains the following:",
