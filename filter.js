@@ -4,7 +4,7 @@
     github.com/glenthemes/spoilerTags
 
     [#] v3.0.0: 2024-05-28
-    [#] Last updated: 2024-05-28 6:29PM [PDT]
+    [#] Last updated: 2024-05-28 10:07PM [PDT]
     
 ---------------------------------------------------------*/
 
@@ -20,6 +20,8 @@ window.spoilerTagsV3 = function(params){
 
         if(spoilerFilters && Array.isArray(spoilerFilters)){
             for(let i=0; i<spoilerFilters.length; i++){
+                spoilerFilters[i] = spoilerFilters[i].trim();
+
                 // #food --> food
                 if(spoilerFilters[i].indexOf("#") > -1){
                     spoilerFilters[i] = spoilerFilters[i].replaceAll("#","");
@@ -53,7 +55,7 @@ window.spoilerTagsV3 = function(params){
         !postTags ? console.warn("spoilerTags: no [init-tags] found.") : ""
 
         // HAS POSTS: proceed
-        document.querySelectorAll("[posts-selector]:not(:has(.spoilertags))")?.forEach(post => {
+        document.querySelectorAll("[posts-selector]:not(:has(.spoilertags-post-inner, .spoilertags))")?.forEach(post => {
             // clean up unwrapped text nodes (if there are any)
             let stack = [post];            
             while(stack.length > 0){
@@ -124,7 +126,7 @@ window.spoilerTagsV3 = function(params){
                 post.setAttribute("has-tags","");
 
                 post.querySelectorAll("[init-tags]")?.forEach((tag,i) => {
-                    let tagText = tag.textContent;
+                    let tagText = tag.textContent.trim();
                     if(tagText.indexOf("#") > -1){
                         tagText = tagText.replaceAll("#","");
                     }
