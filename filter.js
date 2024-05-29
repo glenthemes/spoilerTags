@@ -3,239 +3,237 @@
     spoilerTags @glenthemes
     github.com/glenthemes/spoilerTags
 
-    [#] v2.0.1: 2024-01-27
-    [#] Last updated: 2024-01-27 1:54PM [PST]
+    [#] v3.0.0: 2024-05-28
+    [#] Last updated: 2024-05-28 6:29PM [PDT]
     
 ---------------------------------------------------------*/
 
-window.spoilerTagsV2 = (q_q) => {
-	let filter = q_q.filter;
-	let message = q_q.message;
-	let includeHashtag = q_q.includeHashtag;
-	let tagSeparator = q_q.tagSeparator;
-	let viewPostText = q_q.viewPostText;
-	let shrinkPosts = q_q.shrinkPosts;
-	
-	/*---- SET DEFAULTS IF ARGS ARE EMPTY ----*/
-	if(typeof filter == "undefined"){
-		filter = ["#spoiler", "#spoilers"]
-	}
-	
-	if(typeof message == "undefined"){
-		message = "This post contains filtered tags."
-	}
-	
-	if(typeof includeHashtag == "undefined"){
-		includeHashtag = "yes"
-	}
-	
-	if(typeof tagSeparator == "undefined"){
-		tagSeparator = ","
-	}
-	
-	if(typeof viewPostText == "undefined"){
-		viewPostText = "View post"
-	}
-	
-	if(typeof shrinkPosts == "undefined"){
-		shrinkPosts = "yes"
-	}
-	
-	/*---- CHECK IF ALL ARGS ARE PRESENT ----*/
-	let exe = [filter, message, includeHashtag, tagSeparator, viewPostText, shrinkPosts];
-	let uwu = exe.every(x => typeof x !== "undefined");
-	if(uwu){
-		let zfilter = filter;
-		filter = [];
-		zfilter.forEach(f => {
-			f = f.replaceAll("#","");
-			filter.push(f)
-		})
-		
-		document.querySelectorAll("[posts-selector]")?.forEach(posts => {
-			if(posts.querySelector("[init-tags]")){
-				/*----- POST HEIGHT -----*/
-				let postHeight = 0;
-				let hfzmm = Date.now();
-				let gbvkv = 1500;
-				let nvpnd = setInterval(() => {
-					if(Date.now() - hfzmm > gbvkv){
-						clearInterval(nvpnd)
-					} else {
-						postHeight = posts.offsetHeight;
-						posts.setAttribute("post-height",`${postHeight}px`)
-					}
-				},0);
-				
-				/*----- SPOILER OVERLAY -----*/
-				let overlay = document.createElement("div");
-				overlay.classList.add("spoiler-overlay");
+window.spoilerTagsV3 = function(params){
+    let spoilerTagsInit = (params) => {
+        // check the arguments
+        let spoilerFilters = params.filter;
+        let spoilerMessage = params.message;
+        let spoilerHashtag = params.includeHashtag;
+        let spoilerSeparator = params.tagSeparator;
+        let spoilerViewText = params.viewPostText;
+        let spoilerShrink = params.shrinkPosts;
 
-				/*----- SPOILER TEXT -----*/
-				let textCont = document.createElement("div");
-				textCont.classList.add("spoiler-text");
-				textCont.textContent = message;
+        if(spoilerFilters && Array.isArray(spoilerFilters)){
+            for(let i=0; i<spoilerFilters.length; i++){
+                // #food --> food
+                if(spoilerFilters[i].indexOf("#") > -1){
+                    spoilerFilters[i] = spoilerFilters[i].replaceAll("#","");
+                }
+            }
+            // console.log(spoilerFilters)
+        }
 
-				/*----- DISPLAY WHAT TAGS -----*/
-				let tagsList = document.createElement("div");
-				tagsList.classList.add("spoiler-tags");
-				
-				/*----- "SHOW ANYWAY" BUTTON -----*/
-				let btnCont = document.createElement("div");
-				btnCont.classList.add("show-spoiler");
-				
-				let btn = document.createElement("button");
-				btn.textContent = viewPostText
-				
-				/*----- DEAL WITH TAGS -----*/
-				let tagsStr = "";
-				let tagsStrTrim = "";
-				
-				posts.querySelectorAll("[init-tags]")?.forEach(tags => {
-					let tag = tags.textContent.trim().replaceAll("#","");
-					let tagSepLength = tagSeparator.length;
-					let match = filter.findIndex(x => x === tag);
-					
-					// if any tag in that post has triggered something in the filter system:
-					if(match > -1){
-						if(includeHashtag == "yes"){
-							if(tag.slice(0,1) !== "#"){
-								tag = `#${tag}`
-							}
-						} else {
-							if(tag.slice(0,1) == "#"){
-								tag = tag.slice(1)
-							}
-						}
-						
-						tagsStr += `${tag}${tagSeparator}`
-						tagsStrTrim = tagsStr.slice(0,-tagSepLength);
-						// if posts doesn't have [filtered-tags] attr yet:
-						if(!posts.matches("has-filtered-tags")){
-							posts.classList.add("has-filtered-tags");
-							posts.setAttribute("filtered-tags",tagsStrTrim);
-							posts.prepend(overlay);
-							overlay.prepend(textCont)
-							textCont.append(tagsList);
-							tagsList.textContent = tagsStrTrim;
-							textCont.append(btnCont);
-							btnCont.append(btn)
-							
-							/*----- SPOILER TEXT HEIGHT -----*/
-							let textHeight = 0;
-							let kgxrj = Date.now();
-							let gbvkv = 200;
-							let pdkcm = setInterval(() => {
-								if(Date.now() - kgxrj > gbvkv){
-									clearInterval(pdkcm)
-								} else {
-									textHeight = textCont.offsetHeight;
-									textCont.setAttribute("text-height",`${textHeight}px`);
-									if(shrinkPosts == "yes"){
-										// tall posts
-										if(postHeight > textHeight){
-											let oldHeight = posts.getAttribute("post-height");
-											posts.setAttribute("old-post-height",oldHeight);
-											posts.style.height = `${textHeight}px`
-											
-										}
-									}//end: if shrinkPosts
-									
-									// if posts are shorter than the spoiler text height, regardless of shrinkPosts option, make it as tall as the spoiler text height
-									if(!posts.matches("[old-post-height]")){
-										// tall posts
-										if(postHeight < textHeight){
-											let oldHeight = posts.getAttribute("post-height");
-											posts.setAttribute("old-post-height",oldHeight);
-											posts.style.height = `${textHeight}px`
-										}
-									}
-									
-									
-								}
-							},0);
-							
-							/*----- BUTTON CLICK -----*/
-							btn.addEventListener("click", e => {
-								e.preventDefault();
-								
-								// stop cursor from glitching
-								posts.classList.add("poof")
-								
-								// get fade speed
-								let elFade = getSpeed("--Spoiler-Fade-Speed")
-								
-								// get shrink speed
-								let shrinkSpeed = getSpeed("--Shrink-Posts-Speed");
-								
-								// if needs to be shrunk
-								if(posts.matches("[old-post-height]")){
-									// fade out: text
-									textCont.classList.add("leave");
-									
-									// shrink posts
-									setTimeout(() => {
-										posts.classList.add("post-shrink");
-										posts.style.height = `${posts.getAttribute("old-post-height")}`
-										
-										// fade in: post content
-										setTimeout(() => {
-											overlay.classList.add("leave")
-											posts.classList.remove("post-shrink");
-											// remove overlay
-											setTimeout(() => {
-												posts.classList.remove("poof")
-												overlay.style.display = "none";
-                        
-                        // remove inline height on posts after ani is done
-                        posts.style.height = "";
-											},shrinkSpeed)
-										},shrinkSpeed)
-									},elFade*0.8)
-								}
-								
-								// if no shrink, simple fade out/in
-								else {
-									// fade out: text
-									textCont.classList.add("leave");
-									
-									// fade in: post content
-									setTimeout(() => {
-										overlay.classList.add("leave")
-										
-										// remove overlay
-										setTimeout(() => {
-											posts.classList.remove("poof")
-											overlay.style.display = "none"
-										},elFade*0.8)
-									},elFade*0.8)
-								}
-							})
-						}//end: if posts doesn't have [filtered-tags] yet
-					}//end: if any tag has triggered one in the system
-				})//end: tags forEach
-				
-			}//end: if posts has init-tags
-		})//end: posts forEach
-		/*---------------------------------*/
-	}//end: if all args are present
-	
-	const getSpeed = (rootVar) => {
-		let speed = getComputedStyle(document.documentElement).getPropertyValue(rootVar).trim();
-		if(isNaN(Number(speed))){
-			let nums = Number(speed.replace(/[^\d\.]*/g,""));
-			let units = speed.replace(nums,"").trim();
-			if(units == "s"){
-				speed = nums * 1000
-			} else if(units == "ms"){
-				speed = nums
-			} else {
-				speed = 400
-			}
-		} else {
-			speed = Number(speed)
-		}
-		
-		return speed
-	}
-}//end entire func
+        let getRoot = (VAR) => {
+            return getComputedStyle(document.documentElement).getPropertyValue(VAR).replaceAll('"','').replaceAll("'","").trim();
+        }
+
+        let getSpeed = (s) => {
+            let res;
+            let nums = Number(s.replace(/[^\d\.]*/g,""));
+            let units = s.toLowerCase().replace(/[^a-z]/g,"");
+            units == "s" ? res = nums*1000 : res = nums;
+            return res
+        }
+
+        let shrinkSpeedWithUnits = getRoot("--Shrink-Posts-Speed");
+        let shrinkSpeed = getSpeed(getRoot("--Shrink-Posts-Speed"));
+        let fadeSpeed = getSpeed(getRoot("--Spoiler-Fade-Speed"));
+
+        // check if things exist on the site
+        let posts = document.querySelector("[posts-selector]");
+        let postTags = document.querySelector("[init-tags]");
+
+        // NO POSTS / NO TAGS: warn the user
+        !posts ? console.warn("spoilerTags: no [posts-selector] found.") : ""
+        !postTags ? console.warn("spoilerTags: no [init-tags] found.") : ""
+
+        // HAS POSTS: proceed
+        document.querySelectorAll("[posts-selector]:not(:has(.spoilertags))")?.forEach(post => {
+            // clean up unwrapped text nodes (if there are any)
+            let stack = [post];            
+            while(stack.length > 0){
+                let currentNode = stack.pop();
+                if(currentNode.nodeType === 3 && currentNode.data.trim().length > 0 && (currentNode.parentNode && !currentNode.parentNode.matches("span"))){
+                    let span = document.createElement("span");
+                    currentNode.before(span);
+                    span.appendChild(currentNode);
+                } else if(currentNode.childNodes.length > 0){
+                    for(let i=currentNode.childNodes.length-1; i>=0; i--){
+                        stack.push(currentNode.childNodes[i]);
+                    }
+                }
+            }
+
+            // wrap post's inner contents
+            let postInner = document.createElement("div");
+            postInner.classList.add("spoilertags-post-inner")
+            post.prepend(postInner);
+
+            let contA = document.createElement("div");
+            contA.classList.add("spoilertags-hug-a");
+            postInner.prepend(contA);
+
+            let contB = document.createElement("div");
+            contB.classList.add("spoilertags-hug-b");
+            contA.prepend(contB);
+
+            post.querySelectorAll(":scope > *:not(.spoilertags-post-inner)")?.forEach(n => {
+                contB.append(n)
+            })
+
+            // shrink posts
+            if(spoilerShrink == "yes" || spoilerShrink == "true" || spoilerShrink === true){
+                post.setAttribute("shrink-posts","");
+            }
+            
+            // normal posts
+            else {
+                post.setAttribute("normal-posts","");
+                let postMinHeight = getRoot("--Posts-Min-Height");
+                if(Number(postMinHeight) || postMinHeight.indexOf("px") > -1){
+                    postMinHeight = Number(postMinHeight.replace(/[^\d\.]*/g,""))
+                } else {
+                    postMinHeight = 0;
+                }
+
+                let cntna = Date.now();
+                let goxfy = setInterval(() => {
+                    if(Date.now() - cntna > 699){
+                        clearInterval(goxfy)
+                    } else {
+                        let postHeight = post.querySelector(".spoilertags-hug-a")?.offsetHeight;
+                        if(postHeight > 0){                            
+                            if(postHeight >= postMinHeight){
+                                post.style.setProperty("--Shrink-Posts-Speed","0s");
+                            } else {
+                                post.style.setProperty("--Shrink-Posts-Speed",shrinkSpeedWithUnits);
+                            }
+                        }
+                    }
+                },1)
+            }
+
+            // find [init-tags] within post scope
+            let matches = [];
+            if(post.querySelector("[init-tags]")){
+                post.setAttribute("has-tags","");
+
+                post.querySelectorAll("[init-tags]")?.forEach((tag,i) => {
+                    let tagText = tag.textContent;
+                    if(tagText.indexOf("#") > -1){
+                        tagText = tagText.replaceAll("#","");
+                    }
+
+                    let match = spoilerFilters.findIndex(x => x === tagText);
+
+                    if(match > -1){
+                        matches.push(tagText);
+
+                        // if there's a match, add the spoiler filter
+                        if(!post.matches("[has-spoiler-tags]")){
+                            post.setAttribute("has-spoiler-tags","");
+
+                            // make spoiler overlay[s]
+                            let coverA = document.createElement("div");
+                            coverA.classList.add("spoilertags-cover-a");
+                            coverA.classList.add("spoilertags");
+                            post.prepend(coverA);
+
+                            let coverB = document.createElement("div");
+                            coverB.classList.add("spoilertags-cover-b");
+                            coverA.prepend(coverB);
+
+                            let coverC = document.createElement("div");
+                            coverC.classList.add("spoilertags-cover-c");
+                            coverC.classList.add("screen");
+                            coverB.prepend(coverC);
+
+                            let msgDiv = document.createElement("p");
+                            msgDiv.classList.add("spoilertags-message");
+                            msgDiv.classList.add("message");
+                            coverC.append(msgDiv);
+                            if(spoilerMessage && typeof spoilerMessage == "string" && spoilerMessage.trim() !== ""){
+                                msgDiv.innerHTML = spoilerMessage
+                            } else {
+                                msgDiv.textContent = "This post contains the following:"
+                            }
+
+                            let listTags = document.createElement("p");
+                            listTags.classList.add("spoilertags-tags");
+                            listTags.classList.add("tags");
+                            coverC.append(listTags);
+
+                            let viewCont = document.createElement("div");
+                            viewCont.classList.add("spoilertags-btn-wrap");
+                            coverC.append(viewCont);
+
+                            let viewBtn = document.createElement("button");
+                            viewBtn.classList.add("spoilertags-btn");
+                            viewBtn.textContent = "Show anyway";
+                            viewCont.append(viewBtn);
+                        }
+                    }
+
+                    // last case of [init-tags] in that post
+                    if(i == post.querySelectorAll("[init-tags]")?.length-1){
+                        // console.log(matches);
+
+                        let findList = post.querySelector(".spoilertags-tags");
+                        if(findList){
+                            // list tags starting with "#" ?
+                            if(spoilerHashtag == "yes" || spoilerHashtag == "true" || spoilerHashtag === true){
+                                if(matches[0].slice(0,1) !== "#"){
+                                    for(let j=0; j<matches.length; j++){
+                                        matches[j] = `#${matches[j]}`;
+                                    }
+                                }
+                            } else {
+                                if(matches[0].slice(0,1) == "#"){
+                                    for(let j=0; j<matches.length; j++){
+                                        matches[j] = matches[j].slice(1);
+                                    }
+                                }
+                            }
+
+                            // list tags and separate them with what character(s)?
+                            if(spoilerSeparator && spoilerSeparator.trim() !== "" && typeof spoilerSeparator == "string"){
+                                findList.textContent = matches.join(spoilerSeparator)
+                            } else {
+                                findList.textContent = matches.join(", ")
+                            }
+                        }
+
+                        let findBtn = post.querySelector(".spoilertags-btn");
+                        if(findBtn){
+                            if(spoilerViewText && spoilerViewText.trim() !== "" && typeof spoilerViewText == "string"){
+                                findBtn.textContent = spoilerViewText;
+                            }
+                            
+                            let toteSpeed = Math.floor(fadeSpeed + shrinkSpeed);
+
+                            findBtn.addEventListener("click", () => {
+                                post.classList.add("spoilertags-active");
+                                setTimeout(() => {
+                                    let findCover = post.querySelector(".spoilertags-cover-a");
+                                    findCover.remove();
+                                    post.classList.remove("spoilertags-active");
+                                    post.removeAttribute("has-spoiler-tags");
+                                },toteSpeed)
+                            })
+                        }
+                    }
+                })//end [init-tags] each
+            }
+            
+        })// end posts each
+    }//end spoilerTagsInit
+
+    document.readyState == "loading" ?
+    document.addEventListener("DOMContentLoaded", () => spoilerTagsInit(params)) :
+    spoilerTagsInit(params);
+}//end spoilerTags func
