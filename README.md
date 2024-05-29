@@ -6,6 +6,7 @@
 * ┈┈ [Requirements](#requirements)
 * ┈┈ [Demo](#demo)
 * ┈┈ [Install / How to Use](#how-to-use)
+* ┈┈ [Extra styling](#extra-styling)
 * ┈┈ [Help / Troubleshooting](#need-help)
 
 ---
@@ -205,6 +206,29 @@ Declare whether or not you want long posts to shrink/shorten.
 
 Colors, padding, hover speeds etc can be customized in this list called `:root`:  
 <img width="380" alt="image" src="https://github.com/glenthemes/spoilerTags/assets/45606634/b7c4db19-eb1d-4924-8aff-824e256f89b7">
+
+---
+
+### <sub>EXTRA STYLING:</sub>
+
+If you wish to style parts of the spoiler overlay further (e.g. fonts), you can press Enter after `} /* do not delete this bracket */` and paste:
+```css
+.spoilertags .screen {
+    /* additional styling for the spoiler overlay */
+}
+
+.spoilertags .message {
+    /* additional styling for the spoiler message */
+}
+
+.spoilertags .tags {
+    /* additional styling for filtered tags detected */
+}
+
+.spoilertags button {
+    /* additional styling for the "show anyway" button */
+}
+```
 
 ---
 
