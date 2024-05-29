@@ -3,95 +3,163 @@
     spoilerTags @glenthemes
     github.com/glenthemes/spoilerTags
 
-    [#] v2.0.0: 2023-10-01
-    [#] Last updated: 2023-10-01 4:48PM [PDT]
+    [#] v3.0.0: 2024-05-28
+    [#] Last updated: 2024-05-28 6:29PM [PDT]
     
 ---------------------------------------------------------*/
 
+/* posts */
 [posts-selector]{
-	position:relative;
-	overflow:hidden;
+    position:relative!important;
+    overflow:hidden;
 }
 
-[posts-selector], .spoiler-overlay, .spoiler-overlay:before {
-	box-sizing:border-box;
+/*======================================*/
+
+/* warning overlay background */
+.spoilertags-cover-a:before {
+    content:"";
+    position:absolute;
+    top:0;left:0;
+    width:100%;
+    height:100%;
+    background:var(--Spoiler-Overlay-Color);
+    box-sizing:border-box;
+    z-index:-1;
 }
 
-[posts-selector].poof {
-	pointer-events:none;
+/*======================================*/
+
+/*============ NORMAL POSTS: THE SPOILER PART ============*/
+[normal-posts] .spoilertags-cover-a {
+    position:absolute;
+    top:0;left:0;
+    width:100%;
+    height:100%;
+    z-index:1;
 }
 
-.post-shrink {
-	transition:height var(--Shrink-Posts-Speed) ease-in-out
+[normal-posts] .spoilertags-cover-b {
+    height:100%;
 }
 
-.spoiler-overlay {
-	position:absolute;
-	top:0;left:0;
-	width:100%;
-	height:100%;
-	display:flex;
-	flex-direction:column;
-	justify-content:center;
-	align-items:center;
-	text-align:center;
-	z-index:99999;
+[normal-posts] .spoilertags-cover-c {
+    height:100%;
+    justify-content:center;
 }
 
-.spoiler-overlay:before {
-	content:"";
-	position:absolute;
-	top:0;left:0;
-	width:100%;
-	height:100%;
-	background-color:var(--Spoiler-Overlay-Color);
-	z-index:-1;
+[normal-posts][has-spoiler-tags] .spoilertags-post-inner {
+    opacity:0;
+    min-height:var(--Posts-Min-Height);
 }
 
-.spoiler-overlay.leave,
-.spoiler-text.leave {
-	opacity:0;
+[normal-posts][has-spoiler-tags].spoilertags-active .spoilertags-cover-a {
+    opacity:0;
+    transition:opacity var(--Spoiler-Fade-Speed) 0s ease-in-out;
 }
 
-.spoiler-overlay, .spoiler-overlay.leave,
-.spoiler-text, .spoiler-text.leave {
-	transition:opacity var(--Spoiler-Fade-Speed)
+[normal-posts][has-spoiler-tags].spoilertags-active .spoilertags-post-inner {
+    opacity:1;
+    min-height:0;
+    transition:min-height var(--Shrink-Posts-Speed) var(--Spoiler-Fade-Speed) ease-in-out, opacity var(--Spoiler-Fade-Speed) var(--Shrink-Posts-Speed) ease-in-out;
 }
 
-.spoiler-text {
-	padding:var(--Spoiler-Warning-Padding);
-	display:flex;
-	flex-direction:column;
-	justify-content:center;
-	align-items:center;
-	gap:var(--Spoiler-Warning-Row-Spacing) 0;
-	color:var(--Spoiler-Warning-Color)
+/*======================================*/
+
+/*============ SHRINK POSTS: THE SPOILER PART ============*/
+[shrink-posts] .spoilertags-cover-a {
+    position:relative;
+    display:grid;
+    grid-template-rows:1fr;
+    overflow:hidden;
+    z-index:1;
 }
 
-.spoiler-tags {
-	color:var(--Spoiler-Tags-Color)
+[shrink-posts] .spoilertags-cover-b {
+    min-height:0;
+    visibility:visible;
+    transition:visibility var(--Shrink-Posts-Speed) ease-in-out;
 }
 
-.show-spoiler {
-	display:flex;
-	align-items:center;
-	justify-content:center;
+[shrink-posts].spoilertags-active .spoilertags-cover-a {
+    opacity:0;
+    grid-template-rows:0fr;
+    /* show */
+    transition:opacity var(--Spoiler-Fade-Speed) 0s ease-in-out, grid-template-rows calc(var(--Shrink-Posts-Speed) / 2) var(--Spoiler-Fade-Speed) ease-in-out;
 }
 
-.show-spoiler button {
-	margin:0;
-	outline:none;
-	padding:var(--Spoiler-Button-Padding);
-	background-color:var(--Spoiler-Button-Background);
-	border:1px solid var(--Spoiler-Button-Border);
-	border-radius:var(--Spoiler-Button-Roundness);
-	color:var(--Spoiler-Button-Text-Color);
-	line-height:100%;
-	transition:all var(--Spoiler-Button-HOVER-Speed) ease-in-out;
+[shrink-posts].spoilertags-active .spoilertags-cover-b {
+    visibility:hidden;
 }
 
-.show-spoiler button:hover {
-	border-color:var(--Spoiler-Button-HOVER-Border);
-	background-color:var(--Spoiler-Button-HOVER-Background);
-	color:var(--Spoiler-Button-HOVER-Text-Color);	
+/*============ SHRINK POSTS: POSTS PART ============*/
+[has-spoiler-tags][shrink-posts] .spoilertags-hug-a {
+    display:grid;
+    grid-template-rows:0fr;
+    opacity:0;
+    overflow:hidden;
+}
+
+[has-spoiler-tags][shrink-posts] .spoilertags-hug-b {
+    min-height:0;
+    visibility:hidden;
+    transition:visibility var(--Shrink-Posts-Speed) ease-in-out;
+}
+
+[shrink-posts].spoilertags-active .spoilertags-hug-a {
+    opacity:1;
+    grid-template-rows:1fr;
+    /* show */
+    transition:grid-template-rows calc(var(--Shrink-Posts-Speed) / 2) var(--Spoiler-Fade-Speed) ease-in-out, opacity var(--Spoiler-Fade-Speed) calc(var(--Spoiler-Fade-Speed) + (var(--Shrink-Posts-Speed) / 2)) ease-in-out;
+}
+
+[shrink-posts].spoilertags-active .spoilertags-hug-b {
+    visibility:visible;
+}
+
+/*======================================*/
+
+/* spoiler main content styling */
+.spoilertags-cover-c {
+    display:flex;
+    flex-direction:column;
+    gap:var(--Spoiler-Warning-Row-Spacing) 0;
+    padding:var(--Spoiler-Warning-Padding);
+    color:var(--Spoiler-Warning-Text-Color);
+    text-align:var(--Spoiler-Warning-Text-Align);
+    box-sizing:border-box;
+}
+
+.spoilertags-cover-c > * {
+    margin-top:0;
+    margin-bottom:0;
+}
+
+.spoilertags-message:first-child {
+    margin-top:0;
+}
+
+.spoilertags-message:last-child {
+    margin-bottom:0;
+}
+
+.spoilertags-list {
+    color:var(--Spoiler-Tags-Color);
+}
+
+.spoilertags-btn {
+    outline:none;
+    border:var(--Spoiler-Button-Border-Size) solid var(--Spoiler-Button-Border-Color);
+    padding:var(--Spoiler-Button-Padding);
+    background:var(--Spoiler-Button-Background);
+    border-radius:var(--Spoiler-Button-Roundness);
+    color:var(--Spoiler-Button-Text-Color);
+    cursor:pointer;
+    transition:border-color var(--Spoiler-Button-HOVER-Speed) ease-in-out, background-color var(--Spoiler-Button-HOVER-Speed) ease-in-out, color var(--Spoiler-Button-HOVER-Speed) ease-in-out; 
+}
+
+.spoilertags-btn:hover {
+    border-color:var(--Spoiler-Button-HOVER-Border-Color);
+    background:var(--Spoiler-Button-HOVER-Background);
+    color:var(--Spoiler-Button-HOVER-Text-Color);
 }
