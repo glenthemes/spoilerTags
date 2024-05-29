@@ -33,7 +33,7 @@ Originally created for Tumblr use, **spoilerTags()** is a tag-filtering plugin f
 ![spoilerTags screenshot GIF demo.](https://64.media.tumblr.com/9ece0c790a4d9c31ab9f3337593a833c/64ba7621e0cde398-03/s640x960/8d2dd876cc4345bd1e9da0780c66cea52221aaaf.gif)
 
 **Demo Preview:**  
-:mag: [jsfiddle.net/glenthemes/4h1n3g7r/show](https://jsfiddle.net/glenthemes/4h1n3g7r/show)
+:mag: [spoilertags.gitlab.io/s/v3/demo](https://spoilertags.gitlab.io/s/v3/demo)
 
 **Demo Code:**  
 :pencil: [jsfiddle.net/glenthemes/4h1n3g7r/](https://jsfiddle.net/glenthemes/4h1n3g7r/)
@@ -42,7 +42,9 @@ Originally created for Tumblr use, **spoilerTags()** is a tag-filtering plugin f
 
 ### <sub>HOW TO USE:</sub>
 
-:bulb:&ensp;If you're here for the jQuery version of spoilerTags, please read the [old docs](https://github.com/glenthemes/spoilerTags/tree/main/releases/1.9.0#readme)!
+:bulb:&ensp;spoilerTags has had a couple previous versions if you need to use the old one(s):
+* [v1.9.0](https://github.com/glenthemes/spoilerTags/tree/main/releases/1.9.0#readme) (jQuery)
+* [v2.0.1](https://github.com/glenthemes/spoilerTags/tree/main/releases/2.0.1#readme) (JavaScript)
 
 <sup>※ The following instructions are for Tumblr users.</sup>
 
@@ -80,55 +82,49 @@ Add `init-tags`, like so:
 Paste the following after `<head>`:
 ```html
 <!--✻✻✻✻✻✻  spoilerTags by @glenthemes  ✻✻✻✻✻✻-->
-<script src="//spoilertags.gitlab.io/s/v2/filter.js"></script>
-<link href="//spoilertags.gitlab.io/s/v2/style.css" rel="stylesheet">
+<script src="//spoilertags.gitlab.io/s/v3/filter.js"></script>
+<link href="//spoilertags.gitlab.io/s/v3/style.css" rel="stylesheet">
 <script>
-document.addEventListener("DOMContentLoaded", () => {
-    spoilerTagsV2({
-        filter: [
-            "#spoiler",
-            "#spoilers",
-        ],
-        
-        message: "This post contains the following:",
-        includeHashtag: "yes",
-        tagSeparator: ", ",
-        viewPostText: "show anyway",
-        shrinkPosts: "yes"
-    })
+spoilerTagsV3({
+	filter: [
+		"#spoiler",
+		"#spoilertags"
+	],
+	
+	message: "This post contains the following:",
+	includeHashtag: "yes",
+	tagSeparator: ", ",
+	viewPostText: "show anyway",
+	shrinkPosts: "yes"
 })
 </script>
 <style spoilertags>
 :root {
     --Spoiler-Overlay-Color:#ffffff;
-    
+	
     --Spoiler-Warning-Padding:25px;
-    --Spoiler-Warning-Color:#50586c;
-    --Spoiler-Warning-Row-Spacing:1em;
-    
+    --Spoiler-Warning-Text-Color:#50586c;
+    --Spoiler-Warning-Text-Align:center;
+    --Spoiler-Warning-Row-Spacing:1.35em;
+	
     --Spoiler-Tags-Color:#222222;
-    
+	
     --Spoiler-Button-Padding:0.7rem;
     --Spoiler-Button-Background:#ffffff;
-    --Spoiler-Button-Border:#eeeeee;
+    --Spoiler-Button-Border-Size:1px;
+    --Spoiler-Button-Border-Color:#eeeeee;
     --Spoiler-Button-Roundness:4px;
     --Spoiler-Button-Text-Color:#444444;
-    --Spoiler-Button-HOVER-Border:#222222;
+    
+    --Spoiler-Button-HOVER-Border-Color:#222222;
     --Spoiler-Button-HOVER-Background:#222222;
     --Spoiler-Button-HOVER-Text-Color:#efefef;
     --Spoiler-Button-HOVER-Speed:0.25s;
-    
+	
     --Spoiler-Fade-Speed:0.4s;
-    --Shrink-Posts-Speed:0.8s;
-}
-
-.show-spoiler button {
-	font-family:inherit;
-	text-transform:uppercase;
-	letter-spacing:1px;
-	font-size:12px;
-	cursor:help;
-}
+    --Shrink-Posts-Speed:1s;
+    --Posts-Min-Height:200px;
+} /* do not delete this bracket */
 </style>
 ```
 ---
